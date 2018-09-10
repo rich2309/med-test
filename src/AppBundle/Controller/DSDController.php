@@ -26,7 +26,7 @@ class DSDController extends Controller
 
         $dSDs = $em->getRepository('AppBundle:DSD')->findAll();
 
-        return $this->render('dsd/index.html.twig', array(
+        return $this->render('@App/SDS/list.html.twig', array(
             'dSDs' => $dSDs,
         ));
     }
@@ -47,29 +47,14 @@ class DSDController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($dSD);
             $em->flush();
+            $dSDs = $em->getRepository('AppBundle:DSD')->findAll();
 
-            return $this->redirectToRoute('dsd_show', array('id' => $dSD->getId()));
+            return $this->redirectToRoute('dsd_index', array('DSDs' => $dSDs));
         }
 
-        return $this->render('dsd/new.html.twig', array(
+        return $this->render('@App/SDS/add.html.twig', array(
             'dSD' => $dSD,
             'form' => $form->createView(),
-        ));
-    }
-
-    /**
-     * Finds and displays a dSD entity.
-     *
-     * @Route("/{id}", name="dsd_show")
-     * @Method("GET")
-     */
-    public function showAction(DSD $dSD)
-    {
-        $deleteForm = $this->createDeleteForm($dSD);
-
-        return $this->render('dsd/show.html.twig', array(
-            'dSD' => $dSD,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -91,7 +76,7 @@ class DSDController extends Controller
             return $this->redirectToRoute('dsd_edit', array('id' => $dSD->getId()));
         }
 
-        return $this->render('dsd/edit.html.twig', array(
+        return $this->render('@App/SDS/edit.html.twig', array(
             'dSD' => $dSD,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

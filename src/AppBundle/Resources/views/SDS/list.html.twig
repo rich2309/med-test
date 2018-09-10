@@ -1,0 +1,40 @@
+{% extends '@App/Layouts/layout-base.html.twig' %}
+
+{% block body %}
+    <h1>Dsds list</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Manufacturer</th>
+            <th>Itemsds</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for dSD in dSDs %}
+            <tr>
+                <td>{{ dSD.id }}</td>
+                <td>{{ dSD.title }}</td>
+                <td>{{ dSD.manufacturer }}</td>
+                <td>{{ dSD.itemSds }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('dsd_edit', { 'id': dSD.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('dsd_new') }}">Create a new dSD</a>
+        </li>
+    </ul>
+{% endblock %}
