@@ -5,11 +5,13 @@ namespace AppBundle\Entity;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * DSD
  *
  * @ORM\Table(name="dsd")
+ * @Vich\Uploadable
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DSDRepository")
  */
 class DSD
@@ -27,6 +29,7 @@ class DSD
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $title;
 
@@ -34,6 +37,7 @@ class DSD
      * @var string
      *
      * @ORM\Column(name="manufacturer", type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $manufacturer;
 
@@ -41,6 +45,7 @@ class DSD
      * @var int
      *
      * @ORM\Column(name="item_sds", type="integer")
+     * @Assert\NotBlank()
      */
     private $itemSds;
 

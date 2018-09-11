@@ -4,13 +4,58 @@
     <h1>Dsd creation</h1>
 
     {{ form_start(form) }}
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Title</label>
+                {{ form_errors(form.title) }}
+                <div class="form-line focus-select">
+                    {{ form_widget(form.title,{'attr' : {'class' : 'form-control' } }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Manufacturer</label>
+                {{ form_errors(form.manufacturer) }}
+                <div class="form-line focus-select">
+                    {{ form_widget(form.manufacturer,{'attr' : {'class' : 'form-control' } }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>File</label>
+                {{ form_errors(form.file) }}
+                <div class="form-line focus-select">
+                    {{ form_widget(form.file,{'attr' : {'class' : 'form-control' } }) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Item # / MSDS #</label>
+                {{ form_errors(form.itemSds) }}
+                <div class="form-line focus-select">
+                    {{ form_widget(form.itemSds,{'attr' : {'class' : 'form-control' } }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{ form_widget(form) }}
-    <input type="submit" value="Create" />
+    <button type="submit" class="btn btn-primary">Create</button>
     {{ form_end(form) }}
 
     <ul>
         <li>
-            <a href="{{ path('dsd_index') }}">Back to the list</a>
+            <a href="{{ path('dsd_index') }}" class="btn btn-primary">Back to the list</a>
         </li>
     </ul>
 {% endblock content %}
