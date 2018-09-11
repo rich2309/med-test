@@ -9,8 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 
 /**
  * Dsd controller.
- *
- * @Route("dsd")
  */
 class DSDController extends Controller
 {
