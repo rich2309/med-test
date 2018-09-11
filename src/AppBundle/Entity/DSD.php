@@ -53,7 +53,7 @@ class DSD
     /**
      * @Vich\UploadableField(mapping="dsd_file", fileNameProperty="fileName", size="fileSize")
      *
-     * @var File
+     * @var \Symfony\Component\HttpFoundation\File\File|null
      */
     private $file;
 
