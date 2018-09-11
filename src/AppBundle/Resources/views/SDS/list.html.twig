@@ -21,14 +21,14 @@
                 <td>{{ dSD.manufacturer }}</td>
                 <td>{{ dSD.itemSds }}</td>
                 <td>
-                    <a href="{{ path('dsd_edit', { 'id': dSD.id }) }}">
-                        <i class="icon-edit icon-2x"></i>
+                    <a class="btn btn-default" href="{{ path('dsd_edit', { 'id': dSD.id }) }}">
+                        <i class="icon-edit"></i>
                     </a>
                 </td>
                 <td>
-                    <a href="{{ path('dsd_delete', { 'id': dSD.id }) }}">
-                        <i class="icon-trash icon-2x"></i>
-                    </a>
+                    <button class="btn btn-default">
+                        <i class="icon-trash"></i>
+                    </button>
                 </td>
             </tr>
         {% endfor %}

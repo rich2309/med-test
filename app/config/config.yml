@@ -74,8 +74,8 @@ vich_uploader:
     db_driver: orm
     mappings:
         dsd_file:
-            uri_prefix: /dsd/files
-            upload_destination: '%kernel.project_dir%/public/dsd/files'
+            uri_prefix: /files/dsd
+            upload_destination: '%kernel.project_dir%/web/public/files/dsd'
             inject_on_load: false
             delete_on_update: true
             delete_on_remove: true

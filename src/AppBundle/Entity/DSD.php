@@ -92,9 +92,9 @@ class DSD
     /**
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $file
      */
-    public function setImageFile(?File $file = null): void
+    public function setFile(?File $file = null): void
     {
-        $this->imageFile = $file;
+        $this->file = $file;
 
         if (null !== $file) {
             // It is required that at least one field changes if you are using doctrine

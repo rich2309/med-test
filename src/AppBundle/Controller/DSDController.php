@@ -64,14 +64,13 @@ class DSDController extends Controller
     /**
      * Displays a form to edit an existing dSD entity.
      *
-     * @Route("/{id}/edit", name="dsd_edit")
+     * @Route("/update/{id}/edit", name="dsd_edit")
      * @param Request $request
      * @param DSD $dSD
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, DSD $dSD)
     {
-        $deleteForm = $this->createDeleteForm($dSD);
         $editForm = $this->createForm(DSDType::class, $dSD);
         $editForm->handleRequest($request);
 
@@ -84,26 +83,26 @@ class DSDController extends Controller
         return $this->render('@App/SDS/edit.html.twig', array(
             'dSD' => $dSD,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
      * Deletes a dSD entity.
      *
-     * @Route("/{id}", name="dsd_delete")
+     * @Route("/delete/{id}", name="dsd_delete")
      * @param Request $request
-     * @param DSD $dSD
+     * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Request $request, DSD $dSD)
+    public function deleteAction(Request $request, int $id)
     {
-        $form = $this->createDeleteForm($dSD);
+        $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($dSD);
+            dump($em->getRepository(DSD::class)->find($id));die;
+            $em->remove($em->getRepository(DSD::class)->find($id));
             $em->flush();
         }
 
@@ -111,16 +110,14 @@ class DSDController extends Controller
     }
 
     /**
-     * Creates a form to delete a dSD entity.
+     * @param int $id
      *
-     * @param DSD $dSD The dSD entity
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * @return \Symfony\Component\Form\FormInterface
      */
-    private function createDeleteForm(DSD $dSD)
+    private function createDeleteForm(int $id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('dsd_delete', array('id' => $dSD->getId())))
+            ->setAction($this->generateUrl('dsd_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->getForm()
         ;
