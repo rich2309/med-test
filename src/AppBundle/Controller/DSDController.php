@@ -3,29 +3,33 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\DSD;
+use AppBundle\Form\DSDType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Dsd controller.
- */
 class DSDController extends Controller
 {
     /**
      * Lists all dSD entities.
      *
      * @Route("/", name="dsd_index")
-     * @Method("GET")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $paginator  = $this->get('knp_paginator');
         $dSDs = $em->getRepository('AppBundle:DSD')->findAll();
+        $resultsPaginated = $paginator->paginate(
+            $dSDs,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 5)
+        );
 
         return $this->render('@App/SDS/list.html.twig', array(
-            'dSDs' => $dSDs,
+            'dSDs' => $resultsPaginated,
         ));
     }
 
@@ -33,19 +37,20 @@ class DSDController extends Controller
      * Creates a new dSD entity.
      *
      * @Route("/new", name="dsd_new")
-     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
         $dSD = new Dsd();
-        $form = $this->createForm('AppBundle\Form\DSDType', $dSD);
+        $form = $this->createForm(DSDType::class, $dSD);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($dSD);
             $em->flush();
-            $dSDs = $em->getRepository('AppBundle:DSD')->findAll();
+            $dSDs = $em->getRepository(DSD::class)->findAll();
 
             return $this->redirectToRoute('dsd_index', array('DSDs' => $dSDs));
         }
@@ -60,12 +65,14 @@ class DSDController extends Controller
      * Displays a form to edit an existing dSD entity.
      *
      * @Route("/{id}/edit", name="dsd_edit")
-     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param DSD $dSD
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, DSD $dSD)
     {
         $deleteForm = $this->createDeleteForm($dSD);
-        $editForm = $this->createForm('AppBundle\Form\DSDType', $dSD);
+        $editForm = $this->createForm(DSDType::class, $dSD);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -85,7 +92,9 @@ class DSDController extends Controller
      * Deletes a dSD entity.
      *
      * @Route("/{id}", name="dsd_delete")
-     * @Method("DELETE")
+     * @param Request $request
+     * @param DSD $dSD
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, DSD $dSD)
     {

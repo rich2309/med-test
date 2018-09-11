@@ -10,7 +10,7 @@
             <th>Title</th>
             <th>Manufacturer</th>
             <th>Itemsds</th>
-            <th>Actions</th>
+            <th colspan="2">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -21,16 +21,23 @@
                 <td>{{ dSD.manufacturer }}</td>
                 <td>{{ dSD.itemSds }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('dsd_edit', { 'id': dSD.id }) }}">Edit</a>
-                        </li>
-                    </ul>
+                    <a href="{{ path('dsd_edit', { 'id': dSD.id }) }}">
+                        <i class="icon-edit icon-2x"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('dsd_delete', { 'id': dSD.id }) }}">
+                        <i class="icon-trash icon-2x"></i>
+                    </a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
+    <div class="navigation">
+        {{ knp_pagination_render(dSDs) }}
+    </div>
 
     <ul>
         <li>
