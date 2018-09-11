@@ -2,12 +2,14 @@
 
 namespace AppBundle\Entity;
 
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * DSD
  *
- * @ORM\Table(name="d_s_d")
+ * @ORM\Table(name="dsd")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DSDRepository")
  */
 class DSD
@@ -44,6 +46,35 @@ class DSD
 
 
     /**
+     * @Vich\UploadableField(mapping="dsd_file", fileNameProperty="fileName", size="fileSize")
+     *
+     * @var File
+     */
+    private $file;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @var string
+     */
+    private $fileName;
+
+    /**
+     * @ORM\Column(type="integer")
+     *
+     * @var integer
+     */
+    private $fileSize;
+
+    /**
+     * @ORM\Column(type="datetime")
+     *
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -51,6 +82,45 @@ class DSD
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $file
+     */
+    public function setImageFile(?File $file = null): void
+    {
+        $this->imageFile = $file;
+
+        if (null !== $file) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    public function setFileName(?string $fileName): void
+    {
+        $this->fileName = $fileName;
+    }
+
+    public function getFileName(): ?string
+    {
+        return $this->fileName;
+    }
+
+    public function setFileSize(?int $fileSize): void
+    {
+        $this->fileSize = $fileSize;
+    }
+
+    public function getFileSize(): ?int
+    {
+        return $this->fileSize;
     }
 
     /**

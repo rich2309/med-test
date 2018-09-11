@@ -3,8 +3,8 @@
 {% block content %}
     <h1>Dsds list</h1>
 
-    <table>
-        <thead>
+    <table class="table table-striped">
+        <thead class="color-bleu">
         <tr>
             <th>Id</th>
             <th>Title</th>
@@ -23,7 +23,7 @@
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('dsd_edit', { 'id': dSD.id }) }}">edit</a>
+                            <a href="{{ path('dsd_edit', { 'id': dSD.id }) }}">Edit</a>
                         </li>
                     </ul>
                 </td>
@@ -34,7 +34,7 @@
 
     <ul>
         <li>
-            <a href="{{ path('dsd_new') }}">Create a new dSD</a>
+            <a href="{{ path('dsd_new') }}">Create a new DSD</a>
         </li>
     </ul>
 {% endblock content %}
