@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+//use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="dsd")
  * @Vich\Uploadable
+ * @Assert\Callback(methods={"validate"})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DSDRepository")
  */
 class DSD
@@ -78,6 +81,21 @@ class DSD
      */
     private $updatedAt;
 
+    /**
+     * @param ExecutionContextInterface $context
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        if (! in_array($this->file->getMimeType(), array(
+            'application/pdf'
+        ))) {
+            $context
+                ->buildViolation('Wrong file type. Please only .pdf !')
+                ->atPath('fileName')
+                ->addViolation()
+            ;
+        }
+    }
 
     /**
      * Get id

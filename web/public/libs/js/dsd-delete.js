@@ -2,12 +2,10 @@ var path = '';
 
 $(document).ready(function () {
         $(".btn-dsd-delete").on('click', function () {
-        console.log('escucho delete');
         path = $(this).data('path');
-        console.log(path);
             swal({
-                    title: "¿Estás seguro de eliminar tu cartera?",
-                    text: "Se perderá toda la información relacionada",
+                    title: "Are you sure to delete this file ?",
+                    text: "You will not be able to recover the file later",
                     icon: "warning",
                     buttons: {
                         cancel: {
@@ -50,7 +48,7 @@ function unlockDsdDelete() {
 
 function dsdDelete(path) {
     lockDsdDelete();
-    /* Send data */
+    /* Send action */
     $.ajax({
         type: "POST",
         contentType: "application/json",
