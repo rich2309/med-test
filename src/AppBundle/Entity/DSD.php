@@ -2,7 +2,6 @@
 
 namespace AppBundle\Entity;
 
-//use Symfony\Component\Validator\ExecutionContextInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -14,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="dsd")
  * @Vich\Uploadable
- * @Assert\Callback(methods={"validate"})
  * @ORM\Entity(repositoryClass="AppBundle\Repository\DSDRepository")
  */
 class DSD
@@ -82,6 +80,7 @@ class DSD
     private $updatedAt;
 
     /**
+     * @Assert\Callback
      * @param ExecutionContextInterface $context
      */
     public function validate(ExecutionContextInterface $context)
