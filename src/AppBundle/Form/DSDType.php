@@ -19,11 +19,17 @@ class DSDType extends AbstractType
         $builder->add('title', TextType::class,[
             'label' => 'Title',
             'required' => true,
+            'attr' => [
+                'class' => 'form-control',
+            ],
         ]);
 
         $builder->add('manufacturer', TextType::class,[
             'label' => 'Manufacturer',
             'required' => false,
+            'attr' => [
+                'class' => 'form-control',
+            ],
         ]);
 
         $builder->add('file', VichFileType::class,[
@@ -31,11 +37,17 @@ class DSDType extends AbstractType
             'required' => false,
             'download_link' => true,
             'allow_delete' => true,
+            'attr' => [
+                'class' => 'filestyle',
+            ],
         ]);
 
         $builder->add('itemSds', NumberType::class,[
             'label' => '#Item / #SDS',
             'required' => false,
+            'attr' => [
+                'class' => 'form-control',
+            ],
         ]);
     }
 
@@ -56,6 +68,5 @@ class DSDType extends AbstractType
     {
         return 'appbundle_dsd';
     }
-
 
 }

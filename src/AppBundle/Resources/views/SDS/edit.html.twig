@@ -5,17 +5,9 @@
 
     {{ form_start(edit_form) }}
     <div class="row">
-        {% for item in edit_form.children %}
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label>{{ item.vars.label }}</label>
-                    {{ form_errors(item) }}
-                    <div class="form-line focus-select">
-                        {{ form_widget(item,{'attr' : {'class' : 'form-control' } }) }}
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+        {% include '@App/SDS/form.html.twig' with {
+            'form': edit_form
+        } %}
     </div>
     {{ form_rest(edit_form) }}
     <button type="submit" class="btn btn-primary">Edit</button>
@@ -26,5 +18,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('public/libs/js/form-dsd-edit.js') }}"></script>
+    <script src="{{ asset('public/app/js/dsd-form-edit.js') }}"></script>
 {% endblock javascripts %}

@@ -37,16 +37,14 @@ class DSD
     /**
      * @var string
      *
-     * @ORM\Column(name="manufacturer", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="manufacturer", type="string", length=255, nullable=true)
      */
     private $manufacturer;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="item_sds", type="integer")
-     * @Assert\NotBlank()
+     * @ORM\Column(name="item_sds", type="integer", nullable=true)
      */
     private $itemSds;
 
@@ -87,10 +85,10 @@ class DSD
      */
     public function validate(ExecutionContextInterface $context)
     {
-        if(!is_null($this->file)){
-            if (! in_array($this->file->getMimeType(), array(
-                'application/pdf'
-            ))) {
+        if(!is_null($this->file))
+        {
+            if (!in_array($this->file->getMimeType(), ['application/pdf']))
+            {
                 $context
                     ->buildViolation('Wrong file type. Please only .pdf !')
                     ->atPath('fileName')

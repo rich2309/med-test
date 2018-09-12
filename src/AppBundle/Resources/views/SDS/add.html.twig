@@ -5,23 +5,19 @@
 
     {{ form_start(form) }}
     <div class="row">
-        {% for item in form.children %}
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label>{{ item.vars.label }}</label>
-                    {{ form_errors(item) }}
-                    <div class="form-line focus-select">
-                        {{ form_widget(item,{'attr' : {'class' : 'form-control' } }) }}
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
+        {% include '@App/SDS/form.html.twig' with {
+            'form': form
+        } %}
     </div>
+    {% if form_errors(form) %}
+        <div class="alert alert-info" role="alert">
+            {{ form_errors(form) }}
+        </div>
+    {% endif %}
+
     {{ form_rest(form) }}
     <button type="submit" class="btn btn-primary">Create</button>
     <a href="{{ path('dsd_index') }}" class="btn btn-default">Back to the list</a>
     {{ form_end(form) }}
-
-
 
 {% endblock content %}
