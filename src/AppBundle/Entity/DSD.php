@@ -80,20 +80,25 @@ class DSD
     private $updatedAt;
 
     /**
-     * @Assert\Callback
+     * @Assert\Callback(
+     *     message="Wrong file type. Please only .pdf !"
+     *     )
      * @param ExecutionContextInterface $context
      */
     public function validate(ExecutionContextInterface $context)
     {
-        if (! in_array($this->file->getMimeType(), array(
-            'application/pdf'
-        ))) {
-            $context
-                ->buildViolation('Wrong file type. Please only .pdf !')
-                ->atPath('fileName')
-                ->addViolation()
-            ;
+        if(!is_null($this->file)){
+            if (! in_array($this->file->getMimeType(), array(
+                'application/pdf'
+            ))) {
+                $context
+                    ->buildViolation('Wrong file type. Please only .pdf !')
+                    ->atPath('fileName')
+                    ->addViolation()
+                ;
+            }
         }
+
     }
 
     /**
