@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\DSD;
 use AppBundle\Form\DSDType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,7 +26,7 @@ class DSDController extends Controller
         $resultsPaginated = $paginator->paginate(
             $dSDs,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 5)
+            $request->query->getInt('limit', 4)
         );
 
         return $this->render('@App/SDS/list.html.twig', array(
@@ -77,7 +78,7 @@ class DSDController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('dsd_edit', array('id' => $dSD->getId()));
+            return $this->redirectToRoute('dsd_index');
         }
 
         return $this->render('@App/SDS/edit.html.twig', array(
@@ -96,30 +97,16 @@ class DSDController extends Controller
      */
     public function deleteAction(Request $request, int $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($request->isMethod('POST')) {
             $em = $this->getDoctrine()->getManager();
-            dump($em->getRepository(DSD::class)->find($id));die;
             $em->remove($em->getRepository(DSD::class)->find($id));
             $em->flush();
-        }
 
+            return new JsonResponse([
+                'url' => $this->generateUrl('dsd_index'),
+                'code' => 201]);
+        }
         return $this->redirectToRoute('dsd_index');
     }
 
-    /**
-     * @param int $id
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    private function createDeleteForm(int $id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('dsd_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
 }

@@ -1,7 +1,8 @@
 {% extends '@App/Layouts/layout-body.html.twig' %}
 
 {% block content %}
-    <h1>Dsds list</h1>
+    <h1>SDS Binder</h1>
+    <a href="{{ path('dsd_new') }}" class="pull-right">Create a new DSD</a>
 
     <table class="table table-striped">
         <thead class="color-bleu">
@@ -21,27 +22,27 @@
                 <td>{{ dSD.manufacturer }}</td>
                 <td>{{ dSD.itemSds }}</td>
                 <td>
+                    <a class="btn btn-default" href="{{ vich_uploader_asset(dSD, 'file') }}" download="{{ dSD.fileName }}">
+                        <i class="icon-cloud-download"></i>
+                    </a>
+                </td>
+                <td>
                     <a class="btn btn-default" href="{{ path('dsd_edit', { 'id': dSD.id }) }}">
                         <i class="icon-edit"></i>
                     </a>
                 </td>
                 <td>
-                    <button class="btn btn-default">
-                        <i class="icon-trash"></i>
-                    </button>
+                    <a class="btn btn-default btn-dsd-delete"  data-path="{{ path('dsd_delete', { 'id': dSD.id }) }}">
+                        <i class="icon-remove"></i>
+                    </a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <div class="navigation">
+    <div class="navigation pull-right">
         {{ knp_pagination_render(dSDs) }}
     </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('dsd_new') }}">Create a new DSD</a>
-        </li>
-    </ul>
 {% endblock content %}

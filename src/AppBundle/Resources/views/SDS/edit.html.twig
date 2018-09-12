@@ -4,18 +4,27 @@
     <h1>Dsd edit</h1>
 
     {{ form_start(edit_form) }}
-    {{ form_widget(edit_form) }}
-    <input type="submit" value="Edit" />
+    <div class="row">
+        {% for item in edit_form.children %}
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>{{ item.vars.label }}</label>
+                    {{ form_errors(item) }}
+                    <div class="form-line focus-select">
+                        {{ form_widget(item,{'attr' : {'class' : 'form-control' } }) }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {{ form_rest(edit_form) }}
+    <button type="submit" class="btn btn-primary">Edit</button>
+    <a href="{{ path('dsd_index') }}" class="btn btn-default">Back to the list</a>
     {{ form_end(edit_form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('dsd_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-            <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
 {% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('public/libs/js/form-dsd-edit.js') }}"></script>
+{% endblock javascripts %}

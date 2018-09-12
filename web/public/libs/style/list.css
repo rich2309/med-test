@@ -1,4 +1,23 @@
+/*Table thead */
 .color-bleu{
     color: #1b6d85;
     font-size: large;
+}
+
+/* Sweetalert */
+.swal-button {
+    background-color: #009688;
+}
+
+.swal-footer {
+    text-align: center!important;
+}
+
+.swal-button--cancel {
+    color: #555;
+    background-color: #efefef!important;
+}
+
+.swal-title:not(:first-child) {
+    padding-bottom: 50px!important;
 }

@@ -26,13 +26,16 @@ class DSDType extends AbstractType
             'required' => false,
         ]);
 
-        $builder->add('itemSds', NumberType::class,[
-            'label' => '#Item/#SDS',
-            'required' => false,
-        ]);
-
         $builder->add('file', VichFileType::class,[
             'label' => 'Upload a file',
+            'required' => false,
+            'download_link' => true,
+            'allow_delete' => true,
+        ]);
+
+        $builder->add('itemSds', NumberType::class,[
+            'label' => '#Item / #SDS',
+            'required' => false,
         ]);
     }
 
