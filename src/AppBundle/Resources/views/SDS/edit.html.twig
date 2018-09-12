@@ -9,6 +9,11 @@
             'form': edit_form
         } %}
     </div>
+    {% if form_errors(edit_form) %}
+        <div class="alert alert-info" role="alert">
+            {{ form_errors(edit_form) }}
+        </div>
+    {% endif %}
     {{ form_rest(edit_form) }}
     <button type="submit" class="btn btn-primary">Edit</button>
     <a href="{{ path('dsd_index') }}" class="btn btn-default">Back to the list</a>
